@@ -1,29 +1,59 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { PrismaService } from '../prisma-config/prisma.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createUserDto: CreateUserDto) {
+    const usuario = this.prisma.usuario.create({
+      data: createUserDto,
+    });
+    return usuario;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    return await this.prisma.usuario.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const usuario = await this.prisma.usuario.findUnique({ where: { id } });
+
+    if (usuario){
+      return usuario;
+    } else{
+      throw new NotFoundException("Usuário não cadastrado");
+    }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const usuario = await this.prisma.usuario.findUnique({ where: { id } });
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    if (usuario){
+      return await this.prisma.usuario.update({
+        where: { id },
+        data: updateUserDto,
+      });
+    } else{
+      throw new NotFoundException("Usuário não cadastrado");
+    }
+  }  
+
+  async remove(id: number) {
+    const existe = await this.prisma.usuario.findUnique({ where: { id } });
+
+    if (existe){
+      return await this.prisma.usuario.delete({
+        where: { id },
+      });
+    } else{
+      throw new NotFoundException("Usuário não cadastrado");
+    }
   }
 }
