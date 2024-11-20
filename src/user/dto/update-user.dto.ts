@@ -1,7 +1,6 @@
-import { IsString, IsEmail, IsOptional, MinLength} from 'class-validator';
-import { Bytes } from 'web3';
+import { IsString, IsOptional, MinLength } from 'class-validator';
 
-export class UpdateUserDto{
+export class UpdateUserDto {
   @IsString()
   @IsOptional()
   nome?: string;

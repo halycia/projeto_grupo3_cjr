@@ -11,16 +11,20 @@ export class Comentarios {
   conteudo: string;
 
   // Relacionamento Many-to-One com User (antigo Usuario)
-  @ManyToOne(() => User, user => user.avaliacao) // Alterado para 'User'
+  @ManyToOne(() => User, (user) => user.avaliacao) // Alterado para 'User'
   usuario: User;
 
   // Relacionamento Many-to-One com Avaliacao
-  @ManyToOne(() => Avaliacao, avaliacao => avaliacao.comentarios)
+  @ManyToOne(() => Avaliacao, (avaliacao) => avaliacao.comentarios)
   avaliacao: Avaliacao;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 }

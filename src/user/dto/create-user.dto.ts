@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsNotEmpty, MinLength} from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -22,6 +22,6 @@ export class CreateUserDto {
   curso: string;
 
   @IsNotEmpty()
-  fotoPerfil: Buffer;  // Foto de perfil, se aplicável (em formato de URL ou caminho)
+  fotoPerfil: Buffer; // Foto de perfil, se aplicável (em formato de URL ou caminho)
 }
 //esse modelo n é final criei apenas como exemplo e base

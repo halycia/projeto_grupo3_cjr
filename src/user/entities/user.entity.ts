@@ -25,6 +25,6 @@ export class User {
   photoUrl: string; // Foto de perfil
 
   // Relacionamento One-to-Many com Avaliacao
-  @OneToMany(() => Avaliacao, avaliacao => avaliacao.usuario)
+  @OneToMany(() => Avaliacao, (avaliacao) => avaliacao.usuario)
   avaliacao: Avaliacao[];
 }
