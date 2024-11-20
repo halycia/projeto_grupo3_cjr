@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import { User } from '../user/user.entity';
+import { User } from '../user/entities/user.entity';
 import { Professor } from '../professor/professor.entity';
 import { Disciplina } from '../disciplina/disciplina.entity';
 import { Comentarios } from '../comentarios/comentarios.entity'; // Importando Comentarios

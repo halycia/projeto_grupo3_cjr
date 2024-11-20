@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { User } from '../user/user.entity'; // Corrigido: agora está importando 'User'
+import { User } from '../user/entities/user.entity'; // Corrigido: agora está importando 'User'
 import { Avaliacao } from '../avaliacao/avaliacao.entity'; // Importando Avaliacao
 
 @Entity()
