@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id            Int          @id @default(autoincrement())
+  nome          String
+  email         String       @unique
+  senha         String       // Substituir por hash ou formato adequado
+  departamento  String
+  curso         String
+  fotoPerfil    Bytes
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  avaliacao     Avaliacao[]
+  comentarios   Comentarios[]
+}
+
+model Disciplina {
+  id            Int           @id @default(autoincrement())
+  nome          String
+  professores   Professor[]   @relation("ProfessoresDisciplina")     
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  avaliacao     Avaliacao[]
+}
+
+model Professor {
+  id            Int           @id @default(autoincrement())
+  nome          String
+  departamento  String
+  disciplinas   Disciplina[]  @relation("ProfessoresDisciplina")
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  avaliacao     Avaliacao[]
+}
+
+model Avaliacao {
+  id            Int           @id @default(autoincrement())
+  usuario       Usuario       @relation(fields: [usuarioId], references: [id])
+  usuarioId     Int
+  professor     Professor     @relation(fields: [professorId], references: [id])
+  professorId   Int
+  disciplina    Disciplina    @relation(fields: [disciplinaId], references: [id])
+  disciplinaId  Int
+  conteudo      String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  comentarios   Comentarios[]
+}
+
+model Comentarios {
+  id           Int            @id @default(autoincrement())
+  avaliacao    Avaliacao      @relation(fields: [avaliacaoId], references: [id])
+  avaliacaoId  Int
+  usuario      Usuario        @relation(fields: [usuarioId], references: [id])
+  usuarioId    Int
+  conteudo     String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
