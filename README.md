@@ -19,7 +19,7 @@
 
   <h2 id="getting-started">🚀 Getting Started</h2>
   
-  Para fazer uma cópia local ligada ao repositório remoto, siga as instruções:
+  Para fazer uma cópia local ligada ao repositório remoto, siga as seguintes instruções:
 
   *Copie o repositório no seu computador:
   git clone https://github.com/halycia/projeto_grupo3_cjr.git
