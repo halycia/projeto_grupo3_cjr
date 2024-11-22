@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity'; // Sua entidade User
 import { UserModule } from './user/user.module';
 import { Avaliacao } from './avaliacao/avaliacao.entity';
-import { Professor } from './professor/professor.entity';
+import { Professor } from './professor/entities/professor.entity';
 import { Disciplina } from './disciplina/disciplina.entity';
 import { Comentarios } from './comentarios/comentarios.entity';
 import { AvaliacaoModule } from './avaliacao/avaliacao.module';

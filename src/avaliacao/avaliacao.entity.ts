@@ -8,7 +8,7 @@ import {
   ManyToMany,
 } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { Professor } from '../professor/professor.entity';
+import { Professor } from '../professor/entities/professor.entity';
 import { Disciplina } from '../disciplina/disciplina.entity';
 import { Comentarios } from '../comentarios/comentarios.entity'; // Importando Comentarios
 import { forwardRef } from '@nestjs/common';
