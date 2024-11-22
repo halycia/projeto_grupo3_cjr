@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-  "dependencies": {
-    "@prisma/client": "^5.22.0"
-=======
   "name": "banco-de-dados",
   "version": "0.0.1",
   "description": "",
@@ -69,6 +65,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
->>>>>>> main
   }
 }
