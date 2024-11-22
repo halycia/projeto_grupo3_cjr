@@ -12,6 +12,8 @@
 
  <h2 id="overview">🎯 Overview</h2>
 
+ **Repositório do back-end**
+
   O projeto é um ambiente online onde os usuários podem compartilhar avaliações sobre professores e suas disciplinas. Além disso, os usuários podem comentar e interagir nas avaliações de outros, enriquecendo ainda mais o conteúdo.
 
   O principal objetivo é fornecer uma comunidade online onde estudantes possam compartilhar experiências e avaliações sobre professores, facilitando a tomada de decisões informadas em relação à escolha de disciplinas durante o período de matrícula.
@@ -22,9 +24,11 @@
   Para fazer uma cópia local ligada ao repositório remoto, siga as seguintes instruções:
 
   *Copie o repositório no seu computador:
+
   git clone https://github.com/halycia/projeto_grupo3_cjr.git
   
   *Crie uma nova branch para trabalhar, onde minha-feature é o nome da branch (você pode escolher qualquer nome, desde que seja uma breve descrição da feature que você vai desenvolver. A fim de padronizar, o nome deve ser todo minúsculo e coloque - como espaço, se precisar):
+  
   git checkout -b minha-feature
 
   Pronto! Você já está pronto(a) para desenvolver.
