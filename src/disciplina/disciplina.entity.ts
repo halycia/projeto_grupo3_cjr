@@ -26,11 +26,11 @@ export class Disciplina {
   @OneToMany(() => Avaliacao, (avaliacao) => avaliacao.disciplina)
   avaliacao: Avaliacao[];
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'text', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @Column({
-    type: 'timestamp',
+    type: 'text',
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })

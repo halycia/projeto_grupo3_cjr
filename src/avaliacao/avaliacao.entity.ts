@@ -5,11 +5,13 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  ManyToMany,
 } from 'typeorm';
-import { User } from '../user/entities/user.entity';
+import { User } from 'src/user/user.entity';
 import { Professor } from '../professor/professor.entity';
 import { Disciplina } from '../disciplina/disciplina.entity';
 import { Comentarios } from '../comentarios/comentarios.entity'; // Importando Comentarios
+import { forwardRef } from '@nestjs/common';
 
 @Entity()
 export class Avaliacao {
@@ -40,11 +42,11 @@ export class Avaliacao {
   @Column()
   conteudo: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'text', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @Column({
-    type: 'timestamp',
+    type: 'text',
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
