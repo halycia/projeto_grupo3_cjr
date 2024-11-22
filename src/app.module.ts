@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/user.entity'; // Sua entidade User
+import { User } from './user/entities/user.entity'; // Sua entidade User
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { User } from './user/user.entity'; // Sua entidade User
       entities: [User], // Lista de entidades
       synchronize: true, // Cria as tabelas automaticamente (use com cautela em produção)
     }),
-    TypeOrmModule.forFeature([User]), // Registra a entidade para ser usada em serviços
+    TypeOrmModule.forFeature([User]),
+    UserModule, // Registra a entidade para ser usada em serviços
   ],
   controllers: [],
   providers: [],

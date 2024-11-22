@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
 import { Professor } from '../professor/professor.entity'; // Importando Professor
 import { Avaliacao } from '../avaliacao/avaliacao.entity'; // Importando Avaliacao
 
@@ -16,12 +23,16 @@ export class Disciplina {
   professores: Professor[];
 
   // Relacionamento One-to-Many com Avaliacao (Uma Disciplina pode ter muitas Avaliações)
-  @OneToMany(() => Avaliacao, avaliacao => avaliacao.disciplina)
+  @OneToMany(() => Avaliacao, (avaliacao) => avaliacao.disciplina)
   avaliacao: Avaliacao[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 }
