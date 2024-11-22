@@ -21,6 +21,7 @@ import { AvaliacaoModule } from './avaliacao/avaliacao.module';
     TypeOrmModule.forFeature([User]),
     UserModule, // Registra a entidade para ser usada em serviços
     AvaliacaoModule,
+    TypeOrmModule.forFeature([Professor]),
     ProfessorModule,
   ],
   controllers: [],

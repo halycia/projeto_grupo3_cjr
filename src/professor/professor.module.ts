@@ -10,6 +10,6 @@ import { PrismaModule } from '../prisma-config/prisma.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Professor, Disciplina, Avaliacao]), PrismaModule],
   controllers: [ProfessorController],
-  providers: [ProfessorService,],
+  providers: [ProfessorService],
 })
 export class ProfessorModule {}
