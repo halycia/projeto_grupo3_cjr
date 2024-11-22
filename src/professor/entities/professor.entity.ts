@@ -5,8 +5,8 @@ import {
   ManyToMany,
   OneToMany,
 } from 'typeorm';
-import { Disciplina } from '../disciplina/disciplina.entity'; // Importando Disciplina
-import { Avaliacao } from '../avaliacao/avaliacao.entity'; // Importando Avaliacao
+import { Disciplina } from 'src/disciplina/disciplina.entity'; // Importando Disciplina
+import { Avaliacao } from 'src/avaliacao/avaliacao.entity'; // Importando Avaliacao
 
 @Entity()
 export class Professor {

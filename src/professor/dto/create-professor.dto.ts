@@ -8,8 +8,4 @@ export class CreateProfessorDto {
   @IsString()
   @IsNotEmpty()
   departamento: string;
-
-  disciplinasId?: number[];
-
-  avaliacaoId?: number[];
 }

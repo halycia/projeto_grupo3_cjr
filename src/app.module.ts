@@ -4,6 +4,7 @@ import { User } from './user/entities/user.entity'; // Sua entidade User
 import { UserModule } from './user/user.module';
 import { Avaliacao } from './avaliacao/avaliacao.entity';
 import { Professor } from './professor/entities/professor.entity';
+import { ProfessorModule } from './professor/professor.module';
 import { Disciplina } from './disciplina/disciplina.entity';
 import { Comentarios } from './comentarios/comentarios.entity';
 import { AvaliacaoModule } from './avaliacao/avaliacao.module';
@@ -20,6 +21,7 @@ import { AvaliacaoModule } from './avaliacao/avaliacao.module';
     TypeOrmModule.forFeature([User]),
     UserModule, // Registra a entidade para ser usada em serviços
     AvaliacaoModule,
+    ProfessorModule,
   ],
   controllers: [],
   providers: [],
