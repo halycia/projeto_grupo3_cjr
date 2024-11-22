@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { User } from '../user/entities/user.entity'; // Corrigido: agora está importando 'User'
-import { Avaliacao } from '../avaliacao/avaliacao.entity'; // Importando Avaliacao
+import { User } from '../../user/entities/user.entity'; // Corrigido: agora está importando 'User'
+import { Avaliacao } from '../../avaliacao/avaliacao.entity'; // Importando Avaliacao
 
 @Entity()
 export class Comentarios {
@@ -18,13 +18,13 @@ export class Comentarios {
   @ManyToOne(() => Avaliacao, (avaliacao) => avaliacao.comentarios)
   avaliacao: Avaliacao;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  @Column({ type: 'text', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: string;
 
   @Column({
-    type: 'timestamp',
+    type: 'text',
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
-  updatedAt: Date;
+  updatedAt: string;
 }

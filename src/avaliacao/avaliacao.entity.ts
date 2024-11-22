@@ -9,7 +9,7 @@ import {
 import { User } from '../user/entities/user.entity';
 import { Professor } from '../professor/professor.entity';
 import { Disciplina } from '../disciplina/disciplina.entity';
-import { Comentarios } from '../comentarios/comentarios.entity'; // Importando Comentarios
+import { Comentarios } from '../comentarios/entities/comentarios.entity'; // Importando Comentarios
 
 @Entity()
 export class Avaliacao {
@@ -40,15 +40,15 @@ export class Avaliacao {
   @Column()
   conteudo: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  @Column({ type: 'text', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: string;
 
   @Column({
-    type: 'timestamp',
+    type: 'text',
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
-  updatedAt: Date;
+  updatedAt: string;
 
   // Adicionando o relacionamento One-to-Many com Comentarios
   @OneToMany(() => Comentarios, (comentarios) => comentarios.avaliacao)
