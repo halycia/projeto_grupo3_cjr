@@ -6,6 +6,7 @@ import { Avaliacao } from './avaliacao/avaliacao.entity';
 import { Professor } from './professor/professor.entity';
 import { Disciplina } from './disciplina/disciplina.entity';
 import { Comentarios } from './comentarios/comentarios.entity';
+import { AvaliacaoModule } from './avaliacao/avaliacao.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { Comentarios } from './comentarios/comentarios.entity';
     }),
     TypeOrmModule.forFeature([User]),
     UserModule, // Registra a entidade para ser usada em serviços
+    AvaliacaoModule,
   ],
   controllers: [],
   providers: [],
