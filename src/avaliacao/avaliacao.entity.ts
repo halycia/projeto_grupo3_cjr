@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { Professor } from '../professor/professor.entity';
-import { Disciplina } from '../disciplina/disciplina.entity';
+import { Disciplina } from '../disciplina/entities/disciplina.entity';
 import { Comentarios } from '../comentarios/entities/comentarios.entity'; // Importando Comentarios
 
 @Entity()

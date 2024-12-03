@@ -29,41 +29,41 @@ export class ComentariosService {
   }
 
   async findAll() {
-  return await this.prisma.comentarios.findMany();
-}
+    return await this.prisma.comentarios.findMany();
+  }
 
   async findOne(id: number) {
-  const comentario = await this.prisma.comentarios.findUnique({ where: { id } });
+    const comentario = await this.prisma.comentarios.findUnique({ where: { id } });
 
-  if (comentario) {
-    return comentario;
-  } else {
-    throw new NotFoundException('Comentário inexistente');
+    if (comentario) {
+      return comentario;
+    } else {
+      throw new NotFoundException('Comentário inexistente');
+    }
   }
-}
 
   async update(id: number, updateComentariosDto: UpdateComentariosDto) {
-  const comentario = await this.prisma.comentarios.findUnique({ where: { id } });
+    const comentario = await this.prisma.comentarios.findUnique({ where: { id } });
 
-  if (comentario) {
-    return await this.prisma.comentarios.update({
-      where: { id },
-      data: updateComentariosDto,
-    });
-  } else {
-    throw new NotFoundException('Comentário inexistente');
+    if (comentario) {
+      return await this.prisma.comentarios.update({
+        where: { id },
+        data: updateComentariosDto,
+      });
+    } else {
+      throw new NotFoundException('Comentário inexistente');
+    }
   }
-}
 
   async remove(id: number) {
-  const existe = await this.prisma.comentarios.findUnique({ where: { id } });
+    const existe = await this.prisma.comentarios.findUnique({ where: { id } });
 
-  if (existe) {
-    return await this.prisma.comentarios.delete({
-      where: { id },
-    });
-  } else {
-    throw new NotFoundException('Comentário inexistente');
+    if (existe) {
+      return await this.prisma.comentarios.delete({
+        where: { id },
+      });
+    } else {
+      throw new NotFoundException('Comentário inexistente');
+    }
   }
-}
 }

@@ -6,8 +6,8 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
-import { Professor } from '../professor/professor.entity'; // Importando Professor
-import { Avaliacao } from '../avaliacao/avaliacao.entity'; // Importando Avaliacao
+import { Professor } from '../../professor/professor.entity'; // Importando Professor
+import { Avaliacao } from '../../avaliacao/avaliacao.entity'; // Importando Avaliacao
 
 @Entity()
 export class Disciplina {

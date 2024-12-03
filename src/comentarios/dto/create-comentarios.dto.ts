@@ -9,7 +9,7 @@ export class CreateComentariosDto {
     @IsNotEmpty()
     avaliacaoID: number;
 
-    @MaxLength(280, {message: 'Maximum length of 280 characters'}) //tamanho de um tweet
+    @MaxLength(280, {message: 'Tamanho máximo de 280 caracteres para conteudo de comentário'}) //tamanho de um tweet
     @IsString()
     @IsNotEmpty()
     conteudo: string;
