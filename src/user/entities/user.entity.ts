@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Avaliacao } from 'src/avaliacao/avaliacao.entity'; // Importando Avaliacao
+import { forwardRef } from '@nestjs/common';
 
 @Entity()
 export class User {

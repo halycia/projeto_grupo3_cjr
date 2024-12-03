@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DisciplinaService } from './disciplina.service';
 import { DisciplinaController } from './disciplina.controller';
 import { Disciplina } from './entities/disciplina.entity';
-import { Professor } from '../professor/professor.entity';
+import { Professor } from '../professor/entities/professor.entity';
 import { Avaliacao } from '../avaliacao/avaliacao.entity';
 
 @Module({

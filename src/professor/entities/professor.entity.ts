@@ -5,8 +5,8 @@ import {
   ManyToMany,
   OneToMany,
 } from 'typeorm';
-import { Disciplina } from '../disciplina/entities/disciplina.entity'; // Importando Disciplina
-import { Avaliacao } from '../avaliacao/avaliacao.entity'; // Importando Avaliacao
+import { Disciplina } from 'src/disciplina/entities/disciplina.entity'; // Importando Disciplina
+import { Avaliacao } from 'src/avaliacao/avaliacao.entity'; // Importando Avaliacao
 
 @Entity()
 export class Professor {
@@ -28,12 +28,12 @@ export class Professor {
   avaliacao: Avaliacao[];
 
   @Column({ type: 'text', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: string;
+  createdAt: Date;
 
   @Column({
     type: 'text',
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
-  updatedAt: string;
+  updatedAt: Date;
 }

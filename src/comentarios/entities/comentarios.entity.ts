@@ -19,7 +19,7 @@ export class Comentarios {
   avaliacao: Avaliacao;
 
   @Column({ type: 'text', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: string;
+  createdAt: Date;
 
   @Column({
     type: 'text',

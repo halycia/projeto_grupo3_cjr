@@ -6,8 +6,8 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
-import { Professor } from '../../professor/professor.entity'; // Importando Professor
-import { Avaliacao } from '../../avaliacao/avaliacao.entity'; // Importando Avaliacao
+import { Professor } from '../professor/entities/professor.entity'; // Importando Professor
+import { Avaliacao } from '../avaliacao/avaliacao.entity'; // Importando Avaliacao
 
 @Entity()
 export class Disciplina {
@@ -27,7 +27,7 @@ export class Disciplina {
   avaliacao: Avaliacao[];
 
   @Column({ type: 'text', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: string;
+  createdAt: Date;
 
   @Column({
     type: 'text',

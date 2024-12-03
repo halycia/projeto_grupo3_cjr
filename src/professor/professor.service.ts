@@ -1,14 +1,58 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Professor } from './professor.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateProfessorDto } from './dto/create-professor.dto';
+import { UpdateProfessorDto } from './dto/update-professor.dto';
+import { Professor } from './entities/professor.entity';
+import { PrismaService } from '../prisma-config/prisma.service';
 
 @Injectable()
 export class ProfessorService {
   constructor(
-    @InjectRepository(Professor)
-    private readonly professorRepository: Repository<Professor>,
+    private readonly prisma: PrismaService
   ) {}
 
-  // bota os cruds aqui
+  async create(createProfessorDto: CreateProfessorDto) {
+    const professor = this.prisma.professor.create({
+      data: createProfessorDto,
+    });
+    return professor;
+  }
+
+  async findAll() {
+    return await this.prisma.professor.findMany();
+  }
+
+  async findOne(id: number) {
+    const professor = await this.prisma.professor.findUnique({ where: { id } });
+
+    if (professor) {
+      return professor;
+    } else {
+      throw new NotFoundException('Usuário não cadastrado');
+    }
+  }
+
+  async update(id: number, updateProfessorDto: UpdateProfessorDto) {
+    const professor = await this.prisma.professor.findUnique({ where: { id } });
+
+    if (professor) {
+      return await this.prisma.usuario.update({
+        where: { id },
+        data: updateProfessorDto,
+      });
+    } else {
+      throw new NotFoundException('Professor não cadastrado');
+    }
+  }
+
+  async remove(id: number) {
+    const existe = await this.prisma.professor.findUnique({ where: { id } });
+
+    if (existe) {
+      return await this.prisma.professor.delete({
+        where: { id },
+      });
+    } else {
+      throw new NotFoundException('Professor não cadastrado');
+    }
+  } 
 }
