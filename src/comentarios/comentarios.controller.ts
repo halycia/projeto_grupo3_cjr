@@ -31,7 +31,7 @@ export class ComentariosController {
   }
 
   @Patch(':id')
-  update(@Param('id') id:string, @Body() UpdateComentariosDto: UpdateComentariosDto) {
+  update(@Param('id') id: string, @Body() UpdateComentariosDto: UpdateComentariosDto) {
     return this.comentariosService.update(+id, UpdateComentariosDto);
   }
 
