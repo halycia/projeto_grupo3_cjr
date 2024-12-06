@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from '../prisma-config/prisma.service';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class UserService {
@@ -24,7 +24,7 @@ export class UserService {
     if (usuario) {
       return usuario;
     } else {
-      throw new NotFoundException('Usuário não cadastrado');
+      throw new NotFoundException('Usuario nao encontrado');
     }
   }
 
@@ -37,7 +37,7 @@ export class UserService {
         data: updateUserDto,
       });
     } else {
-      throw new NotFoundException('Usuário não cadastrado');
+      throw new NotFoundException('Usuario inalterado. Erro em update');
     }
   }
 
@@ -49,7 +49,7 @@ export class UserService {
         where: { id },
       });
     } else {
-      throw new NotFoundException('Usuário não cadastrado');
+      throw new NotFoundException('Usuario nao deletado. Erro no delete');
     }
   }
 }

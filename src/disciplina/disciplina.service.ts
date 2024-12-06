@@ -1,23 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Disciplina } from './entities/disciplina.entity';
-import { PrismaService } from 'src/prisma-config/prisma.service';
+import { PrismaService } from 'prisma/prisma.service';
 import { CreateDisciplinaDto } from './dto/create-disciplina.dto';
 import { UpdateDisciplinaDto } from './dto/update-disciplina.dto';
 
 @Injectable()
 export class DisciplinaService {
-  constructor(
-    @InjectRepository(Disciplina)
-    private readonly disciplinaRepository: Repository<Disciplina>,
-    private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
-  async create(CreateDisciplinaDto) {
+  async create(createDisciplinaDto: CreateDisciplinaDto) {
     const disciplina = await this.prisma.disciplina.create({
       data: {
-        nome: CreateDisciplinaDto.nome,
-      }
+        nome: createDisciplinaDto.nome,
+      },
     });
     return disciplina;
   }
@@ -27,37 +21,43 @@ export class DisciplinaService {
   }
 
   async findOne(id: number) {
-    const disciplina = await this.prisma.disciplina.findUnique({ where: { id } });
+    const disciplina = await this.prisma.disciplina.findUnique({
+      where: { id },
+    });
 
-    if (disciplina) {
-      return disciplina;
-    } else {
+    if (!disciplina) {
       throw new NotFoundException('Disciplina inexistente');
     }
+
+    return disciplina;
   }
 
   async update(id: number, updateDisciplinaDto: UpdateDisciplinaDto) {
-    const disciplina = await this.prisma.disciplina.findUnique({ where: { id } });
+    const disciplina = await this.prisma.disciplina.findUnique({
+      where: { id },
+    });
 
-    if (disciplina) {
-      return await this.prisma.disciplina.update({
-        where: { id },
-        data: updateDisciplinaDto,
-      });
-    } else {
-      throw new NotFoundException('Disciplina inexistente')
+    if (!disciplina) {
+      throw new NotFoundException('Disciplina inexistente');
     }
+
+    return await this.prisma.disciplina.update({
+      where: { id },
+      data: updateDisciplinaDto,
+    });
   }
 
   async remove(id: number) {
-    const existe = await this.prisma.disciplina.findUnique({ where: { id } });
+    const disciplina = await this.prisma.disciplina.findUnique({
+      where: { id },
+    });
 
-    if (existe) {
-      return await this.prisma.disciplina.delete({
-        where: { id },
-      });
-    } else {
+    if (!disciplina) {
       throw new NotFoundException('Disciplina inexistente');
     }
+
+    return await this.prisma.disciplina.delete({
+      where: { id },
+    });
   }
 }

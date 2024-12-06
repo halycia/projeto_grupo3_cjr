@@ -1,17 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Comentarios } from './entities/comentarios.entity';
+import { PrismaService } from 'prisma/prisma.service';
 import { CreateComentariosDto } from './dto/create-comentarios.dto';
 import { UpdateComentariosDto } from './dto/update-comentarios.dto';
-import { PrismaService } from 'src/prisma-config/prisma.service';
 
 @Injectable()
 export class ComentariosService {
-  constructor(
-    @InjectRepository(Comentarios)
-    private readonly comentariosRepository: Repository<Comentarios>,
-    private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createComentariosDto: CreateComentariosDto) {
     const comentario = await this.prisma.comentarios.create({
@@ -38,7 +32,7 @@ export class ComentariosService {
     if (comentario) {
       return comentario;
     } else {
-      throw new NotFoundException('Comentário inexistente');
+      throw new NotFoundException(`Comentário com id ${id} não encontrado`);
     }
   }
 
@@ -51,19 +45,19 @@ export class ComentariosService {
         data: updateComentariosDto,
       });
     } else {
-      throw new NotFoundException('Comentário inexistente');
+      throw new NotFoundException(`Comentário com id ${id} não encontrado`);
     }
   }
 
   async remove(id: number) {
-    const existe = await this.prisma.comentarios.findUnique({ where: { id } });
+    const comentario = await this.prisma.comentarios.findUnique({ where: { id } });
 
-    if (existe) {
+    if (comentario) {
       return await this.prisma.comentarios.delete({
         where: { id },
       });
     } else {
-      throw new NotFoundException('Comentário inexistente');
+      throw new NotFoundException(`Comentário com id ${id} não encontrado`);
     }
   }
 }

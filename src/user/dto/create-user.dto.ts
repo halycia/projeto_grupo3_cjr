@@ -21,7 +21,6 @@ export class CreateUserDto {
   @IsNotEmpty()
   curso: string;
 
-  @IsNotEmpty()
   @IsOptional()
   fotoPerfil: Buffer; // Foto de perfil, se aplicável (em formato de URL ou caminho)
 }
