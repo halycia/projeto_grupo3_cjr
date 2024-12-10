@@ -31,7 +31,7 @@ export class AvaliacaoController {
     return await this.avaliacaoService.findAll();
   }
 
-  @Get('id')
+  @Get(':id')
   @HttpCode(200) // O recurso foi encontrado e retornado com sucesso.
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const avaliacao = await this.avaliacaoService.findOne(id);
@@ -41,7 +41,7 @@ export class AvaliacaoController {
     return avaliacao;
   }
 
-  @Patch('id')
+  @Patch(':id')
   @HttpCode(200) // O recurso foi atualizado com sucesso e o recurso atualizado foi retornado.
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -54,7 +54,7 @@ export class AvaliacaoController {
     return await this.avaliacaoService.update(id, data);
   }
 
-  @Delete('id')
+  @Delete(':id')
   @HttpCode(204) // O recurso foi excluído com sucesso.
   async remove(@Param('id', ParseIntPipe) id: number) {
     const avaliacao = await this.avaliacaoService.findOne(id);

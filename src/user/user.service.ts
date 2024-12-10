@@ -45,9 +45,7 @@ export class UserService {
     const existe = await this.prisma.usuario.findUnique({ where: { id } });
 
     if (existe) {
-      return await this.prisma.usuario.delete({
-        where: { id },
-      });
+      return await this.prisma.usuario.delete({ where: { id } });
     } else {
       throw new NotFoundException('Usuario nao deletado. Erro no delete');
     }

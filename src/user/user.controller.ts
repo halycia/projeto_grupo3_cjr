@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   NotFoundException,
   HttpCode,
   ParseIntPipe
@@ -30,7 +30,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get('id')
+  @Get(':id')
   @HttpCode(200) // O recurso foi encontrado e retornado com sucesso.
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const user = await this.userService.findOne(id);
@@ -40,23 +40,23 @@ export class UserController {
     return user;
   }
 
-  @Patch('id')
+  @Patch(':id')
   @HttpCode(200) // O recurso foi atualizado com sucesso e o recurso atualizado foi retornado.
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
     const user = await this.userService.findOne(id);
     if (!user) {
       throw new NotFoundException(`Patch not possible. User with ${id} not found`)
     }
-    return user;
+    return this.userService.update(id, updateUserDto);
   }
 
-  @Delete('id')
+  @Delete(':id')
   @HttpCode(204) // O recurso foi excluído com sucesso.
   async remove(@Param('id', ParseIntPipe) id: number) {
     const user = await this.userService.findOne(id);
     if (!user) {
       throw new NotFoundException(`Delete not possible. User with ${id} not found`)
     }
-    return user;
+    await this.userService.remove(id);
   }
 }

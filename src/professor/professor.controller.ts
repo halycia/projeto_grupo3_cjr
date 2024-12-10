@@ -30,7 +30,7 @@ export class ProfessorController {
     return this.professorService.findAll();
   }
 
-  @Get('id')
+  @Get(':id')
   @HttpCode(200) // O recurso foi encontrado e retornado com sucesso.
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const professor = await this.professorService.findOne(id);
@@ -40,26 +40,24 @@ export class ProfessorController {
     return professor;
   }
 
-  @Patch('id')
+  @Patch(':id')
   @HttpCode(200) // O recurso foi atualizado com sucesso e o recurso atualizado foi retornado.
-  async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateProfessorDto: UpdateProfessorDto,
-  ) {
+  async update(@Param('id', ParseIntPipe) id: number,
+    @Body() updateProfessorDto: UpdateProfessorDto) {
     const professor = await this.professorService.findOne(id);
     if (!professor) {
       throw new NotFoundException(`Professor with ID ${id} not found`);
     }
-    return this.professorService.update(id, updateProfessorDto);
+    return await this.professorService.update(id, updateProfessorDto);
   }
 
-  @Delete('id')
+  @Delete(':id')
   @HttpCode(204) // O recurso foi excluído com sucesso.
   async remove(@Param('id', ParseIntPipe) id: number) {
     const professor = await this.professorService.findOne(id);
     if (!professor) {
       throw new NotFoundException(`Professor with ID ${id} not found`);
     }
-    return this.professorService.remove(id);
+    await this.professorService.remove(id);
   }
 }

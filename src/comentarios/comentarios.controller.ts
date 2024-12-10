@@ -30,7 +30,7 @@ export class ComentariosController {
     return this.comentariosService.findAll();
   }
 
-  @Get('id')
+  @Get(':id')
   @HttpCode(200) // Recurso encontrado com sucesso.
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const comentario = await this.comentariosService.findOne(id);
@@ -41,7 +41,7 @@ export class ComentariosController {
     return comentario;
   }
 
-  @Patch('id')
+  @Patch(':id')
   @HttpCode(200) // Recurso atualizado com sucesso.
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateComentariosDto: UpdateComentariosDto) {
     const comentario = await this.comentariosService.findOne(id);
@@ -52,7 +52,7 @@ export class ComentariosController {
     return this.comentariosService.update(id, updateComentariosDto);
   }
 
-  @Delete('id')
+  @Delete(':id')
   @HttpCode(204) // Recurso excluído com sucesso.
   async remove(@Param('id', ParseIntPipe) id: number) {
     const comentario = await this.comentariosService.findOne(id);

@@ -30,7 +30,7 @@ export class DisciplinaController {
     return this.disciplinaService.findAll();
   }
 
-  @Get('id')
+  @Get(':id')
   @HttpCode(200) // O recurso foi encontrado e retornado com sucesso.
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const disciplina = await this.disciplinaService.findOne(id);
@@ -40,12 +40,10 @@ export class DisciplinaController {
     return disciplina;
   }
 
-  @Patch('id')
+  @Patch(':id')
   @HttpCode(200) // O recurso foi atualizado com sucesso e o recurso atualizado foi retornado.
   async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateDisciplinaDto: UpdateDisciplinaDto,
-  ) {
+    @Param('id', ParseIntPipe) id: number, @Body() updateDisciplinaDto: UpdateDisciplinaDto) {
     const disciplina = await this.disciplinaService.findOne(id);
     if (!disciplina) {
       throw new NotFoundException(`Disciplina with ID ${id} not found`);
@@ -53,13 +51,13 @@ export class DisciplinaController {
     return this.disciplinaService.update(id, updateDisciplinaDto);
   }
 
-  @Delete('id')
+  @Delete(':id')
   @HttpCode(204) // O recurso foi excluído com sucesso.
   async remove(@Param('id', ParseIntPipe) id: number) {
     const disciplina = await this.disciplinaService.findOne(id);
     if (!disciplina) {
       throw new NotFoundException(`Disciplina with ID ${id} not found`);
     }
-    return this.disciplinaService.remove(id);
+    await this.disciplinaService.remove(id);
   }
 }

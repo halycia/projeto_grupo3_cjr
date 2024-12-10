@@ -5,9 +5,7 @@ import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class ProfessorService {
-  constructor(
-    private readonly prisma: PrismaService
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createProfessorDto: CreateProfessorDto) {
     const professor = this.prisma.professor.create({
@@ -34,7 +32,7 @@ export class ProfessorService {
     const professor = await this.prisma.professor.findUnique({ where: { id } });
 
     if (professor) {
-      return await this.prisma.usuario.update({
+      return await this.prisma.professor.update({
         where: { id },
         data: updateProfessorDto,
       });

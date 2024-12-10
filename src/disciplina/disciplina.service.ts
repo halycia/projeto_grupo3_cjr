@@ -9,9 +9,7 @@ export class DisciplinaService {
 
   async create(createDisciplinaDto: CreateDisciplinaDto) {
     const disciplina = await this.prisma.disciplina.create({
-      data: {
-        nome: createDisciplinaDto.nome,
-      },
+      data: createDisciplinaDto,
     });
     return disciplina;
   }
@@ -21,9 +19,7 @@ export class DisciplinaService {
   }
 
   async findOne(id: number) {
-    const disciplina = await this.prisma.disciplina.findUnique({
-      where: { id },
-    });
+    const disciplina = await this.prisma.disciplina.findUnique({ where: { id } });
 
     if (!disciplina) {
       throw new NotFoundException('Disciplina inexistente');
@@ -33,9 +29,7 @@ export class DisciplinaService {
   }
 
   async update(id: number, updateDisciplinaDto: UpdateDisciplinaDto) {
-    const disciplina = await this.prisma.disciplina.findUnique({
-      where: { id },
-    });
+    const disciplina = await this.prisma.disciplina.findUnique({ where: { id } });
 
     if (!disciplina) {
       throw new NotFoundException('Disciplina inexistente');
@@ -48,16 +42,12 @@ export class DisciplinaService {
   }
 
   async remove(id: number) {
-    const disciplina = await this.prisma.disciplina.findUnique({
-      where: { id },
-    });
+    const disciplina = await this.prisma.disciplina.findUnique({ where: { id } });
 
     if (!disciplina) {
       throw new NotFoundException('Disciplina inexistente');
     }
 
-    return await this.prisma.disciplina.delete({
-      where: { id },
-    });
+    return await this.prisma.disciplina.delete({ where: { id } });
   }
 }
