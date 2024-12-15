@@ -11,11 +11,14 @@ import {
   NotFoundException,
   HttpCode,
   ParseIntPipe,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Public } from 'src/auth/decorators/isPublic.decorator';
+import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { UserPayload } from 'src/auth/types/UserPayload';
 
 @Controller('user')
 export class UserController {
@@ -54,6 +57,7 @@ export class UserController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
+    @CurrentUser() currentUser: UserPayload,
   ) {
     const user = await this.userService.findOne(id);
     if (!user) {
@@ -61,17 +65,26 @@ export class UserController {
         `Patch not possible. User with ${id} not found`,
       );
     }
+    if (user.id !== currentUser.sub) {
+      throw new UnauthorizedException('Unauthorized');
+    }
     return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   @HttpCode(204) // O recurso foi excluído com sucesso.
-  async remove(@Param('id', ParseIntPipe) id: number) {
+  async remove(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() currentUser: UserPayload,
+  ) {
     const user = await this.userService.findOne(id);
     if (!user) {
       throw new NotFoundException(
         `Delete not possible. User with ${id} not found`,
       );
+    }
+    if (user.id !== currentUser.sub) {
+      throw new UnauthorizedException('Unauthorized');
     }
     await this.userService.remove(id);
   }

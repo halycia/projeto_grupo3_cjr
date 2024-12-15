@@ -10,11 +10,14 @@ import {
   HttpCode,
   ParseIntPipe,
   ValidationPipe,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AvaliacaoService } from './avaliacao.service';
 import { CreateAvaliacaoDto } from './dto/create.avaliacao.dto';
 import { UpdateAvaliacaoDto } from './dto/update.avaliacao.dto';
 import { Public } from 'src/auth/decorators/isPublic.decorator';
+import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { UserPayload } from 'src/auth/types/UserPayload';
 
 @Controller('avaliacoes')
 export class AvaliacaoController {
@@ -22,7 +25,13 @@ export class AvaliacaoController {
 
   @Post()
   @HttpCode(201) // Requisição foi bem-sucedida: um novo recurso foi criado.
-  async create(@Body(ValidationPipe) avaliacaoData: CreateAvaliacaoDto) {
+  async create(
+    @Body(ValidationPipe) avaliacaoData: CreateAvaliacaoDto,
+    @CurrentUser() currentUser: UserPayload,
+  ) {
+    if (avaliacaoData.usuarioId !== currentUser.sub) {
+      throw new UnauthorizedException('Unauthorized');
+    }
     return await this.avaliacaoService.create(avaliacaoData);
   }
 
@@ -51,6 +60,7 @@ export class AvaliacaoController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body(ValidationPipe) data: UpdateAvaliacaoDto,
+    @CurrentUser() currentUser: UserPayload,
   ) {
     const avaliacao = await this.avaliacaoService.findOne(id);
     if (!avaliacao) {
@@ -58,17 +68,26 @@ export class AvaliacaoController {
         `Patch not possible. Avaliacao with ${id} not found`,
       );
     }
+    if (avaliacao.usuarioId !== currentUser.sub) {
+      throw new UnauthorizedException('Unauthorized');
+    }
     return await this.avaliacaoService.update(id, data);
   }
 
   @Delete(':id')
   @HttpCode(204) // O recurso foi excluído com sucesso.
-  async remove(@Param('id', ParseIntPipe) id: number) {
+  async remove(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() currentUser: UserPayload,
+  ) {
     const avaliacao = await this.avaliacaoService.findOne(id);
     if (!avaliacao) {
       throw new NotFoundException(
         `Delete not possible. Avaliacao with ${id} not found`,
       );
+    }
+    if (avaliacao.usuarioId !== currentUser.sub) {
+      throw new UnauthorizedException('Unauthorized');
     }
     return await this.avaliacaoService.remove(id);
   }
