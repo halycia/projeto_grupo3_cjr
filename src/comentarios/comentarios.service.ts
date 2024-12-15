@@ -11,10 +11,10 @@ export class ComentariosService {
     const comentario = await this.prisma.comentarios.create({
       data: {
         usuario: {
-          connect: { id: createComentariosDto.usuarioID },
+          connect: { id: createComentariosDto.usuarioId },
         },
         avaliacao: {
-          connect: { id: createComentariosDto.avaliacaoID },
+          connect: { id: createComentariosDto.avaliacaoId },
         },
         conteudo: createComentariosDto.conteudo,
       },
@@ -27,7 +27,9 @@ export class ComentariosService {
   }
 
   async findOne(id: number) {
-    const comentario = await this.prisma.comentarios.findUnique({ where: { id } });
+    const comentario = await this.prisma.comentarios.findUnique({
+      where: { id },
+    });
 
     if (comentario) {
       return comentario;
@@ -37,7 +39,9 @@ export class ComentariosService {
   }
 
   async update(id: number, updateComentariosDto: UpdateComentariosDto) {
-    const comentario = await this.prisma.comentarios.findUnique({ where: { id } });
+    const comentario = await this.prisma.comentarios.findUnique({
+      where: { id },
+    });
 
     if (comentario) {
       return await this.prisma.comentarios.update({
@@ -50,7 +54,9 @@ export class ComentariosService {
   }
 
   async remove(id: number) {
-    const comentario = await this.prisma.comentarios.findUnique({ where: { id } });
+    const comentario = await this.prisma.comentarios.findUnique({
+      where: { id },
+    });
 
     if (comentario) {
       return await this.prisma.comentarios.delete({
