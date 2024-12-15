@@ -9,11 +9,12 @@ import {
   NotFoundException,
   HttpCode,
   ParseIntPipe,
-  ValidationPipe
+  ValidationPipe,
 } from '@nestjs/common';
 import { AvaliacaoService } from './avaliacao.service';
 import { CreateAvaliacaoDto } from './dto/create.avaliacao.dto';
 import { UpdateAvaliacaoDto } from './dto/update.avaliacao.dto';
+import { Public } from 'src/auth/decorators/isPublic.decorator';
 
 @Controller('avaliacoes')
 export class AvaliacaoController {
@@ -25,6 +26,7 @@ export class AvaliacaoController {
     return await this.avaliacaoService.create(avaliacaoData);
   }
 
+  @Public()
   @Get()
   @HttpCode(200) // O recurso foi carregado e transmitido no corpo da mensagem.
   async findAll() {
@@ -35,8 +37,11 @@ export class AvaliacaoController {
   @HttpCode(200) // O recurso foi encontrado e retornado com sucesso.
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const avaliacao = await this.avaliacaoService.findOne(id);
-    if (!avaliacao) { // Lança um erro 404: O recurso com o ID especificado não foi encontrado.
-      throw new NotFoundException(`Get not possible. Avaliacao with ${id} not found`);
+    if (!avaliacao) {
+      // Lança um erro 404: O recurso com o ID especificado não foi encontrado.
+      throw new NotFoundException(
+        `Get not possible. Avaliacao with ${id} not found`,
+      );
     }
     return avaliacao;
   }
@@ -49,7 +54,9 @@ export class AvaliacaoController {
   ) {
     const avaliacao = await this.avaliacaoService.findOne(id);
     if (!avaliacao) {
-      throw new NotFoundException(`Patch not possible. Avaliacao with ${id} not found`);
+      throw new NotFoundException(
+        `Patch not possible. Avaliacao with ${id} not found`,
+      );
     }
     return await this.avaliacaoService.update(id, data);
   }
@@ -59,7 +66,9 @@ export class AvaliacaoController {
   async remove(@Param('id', ParseIntPipe) id: number) {
     const avaliacao = await this.avaliacaoService.findOne(id);
     if (!avaliacao) {
-      throw new NotFoundException(`Delete not possible. Avaliacao with ${id} not found`);
+      throw new NotFoundException(
+        `Delete not possible. Avaliacao with ${id} not found`,
+      );
     }
     return await this.avaliacaoService.remove(id);
   }

@@ -8,6 +8,7 @@ import { ComentariosModule } from './comentarios/comentarios.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
+import { AuthGuard } from './auth/guards/auth-guard';
 
 @Module({
   imports: [
@@ -24,6 +25,11 @@ import { AuthModule } from './auth/auth.module';
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: 'APP_GUARD',
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}

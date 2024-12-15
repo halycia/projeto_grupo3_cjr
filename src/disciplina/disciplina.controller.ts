@@ -8,11 +8,12 @@ import {
   Post,
   NotFoundException,
   HttpCode,
-  ParseIntPipe
+  ParseIntPipe,
 } from '@nestjs/common';
 import { DisciplinaService } from './disciplina.service';
 import { CreateDisciplinaDto } from './dto/create-disciplina.dto';
 import { UpdateDisciplinaDto } from './dto/update-disciplina.dto';
+import { Public } from 'src/auth/decorators/isPublic.decorator';
 
 @Controller('disciplinas')
 export class DisciplinaController {
@@ -24,6 +25,7 @@ export class DisciplinaController {
     return this.disciplinaService.create(createDisciplinaDto);
   }
 
+  @Public()
   @Get()
   @HttpCode(200) // O recurso foi carregado e transmitido no corpo da mensagem.
   findAll() {
@@ -43,7 +45,9 @@ export class DisciplinaController {
   @Patch(':id')
   @HttpCode(200) // O recurso foi atualizado com sucesso e o recurso atualizado foi retornado.
   async update(
-    @Param('id', ParseIntPipe) id: number, @Body() updateDisciplinaDto: UpdateDisciplinaDto) {
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDisciplinaDto: UpdateDisciplinaDto,
+  ) {
     const disciplina = await this.disciplinaService.findOne(id);
     if (!disciplina) {
       throw new NotFoundException(`Disciplina with ID ${id} not found`);

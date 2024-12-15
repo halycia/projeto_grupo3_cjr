@@ -8,11 +8,12 @@ import {
   Delete,
   NotFoundException,
   HttpCode,
-  ParseIntPipe
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ProfessorService } from './professor.service';
 import { CreateProfessorDto } from './dto/create-professor.dto';
 import { UpdateProfessorDto } from './dto/update-professor.dto';
+import { Public } from 'src/auth/decorators/isPublic.decorator';
 
 @Controller('professores')
 export class ProfessorController {
@@ -24,12 +25,14 @@ export class ProfessorController {
     return this.professorService.create(createProfessorDto);
   }
 
+  @Public()
   @Get()
   @HttpCode(200) // O recurso foi carregado e transmitido no corpo da mensagem.
   findAll() {
     return this.professorService.findAll();
   }
 
+  @Public()
   @Get(':id')
   @HttpCode(200) // O recurso foi encontrado e retornado com sucesso.
   async findOne(@Param('id', ParseIntPipe) id: number) {
@@ -42,8 +45,10 @@ export class ProfessorController {
 
   @Patch(':id')
   @HttpCode(200) // O recurso foi atualizado com sucesso e o recurso atualizado foi retornado.
-  async update(@Param('id', ParseIntPipe) id: number,
-    @Body() updateProfessorDto: UpdateProfessorDto) {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateProfessorDto: UpdateProfessorDto,
+  ) {
     const professor = await this.professorService.findOne(id);
     if (!professor) {
       throw new NotFoundException(`Professor with ID ${id} not found`);

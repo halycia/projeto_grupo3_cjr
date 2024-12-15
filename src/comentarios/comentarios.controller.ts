@@ -13,6 +13,7 @@ import {
 import { ComentariosService } from './comentarios.service';
 import { CreateComentariosDto } from './dto/create-comentarios.dto';
 import { UpdateComentariosDto } from './dto/update-comentarios.dto';
+import { Public } from 'src/auth/decorators/isPublic.decorator';
 
 @Controller('comentarios')
 export class ComentariosController {
@@ -24,6 +25,7 @@ export class ComentariosController {
     return this.comentariosService.create(createComentariosDto);
   }
 
+  @Public()
   @Get()
   @HttpCode(200) // Recurso carregado com sucesso.
   async findAll() {
@@ -43,11 +45,16 @@ export class ComentariosController {
 
   @Patch(':id')
   @HttpCode(200) // Recurso atualizado com sucesso.
-  async update(@Param('id', ParseIntPipe) id: number, @Body() updateComentariosDto: UpdateComentariosDto) {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateComentariosDto: UpdateComentariosDto,
+  ) {
     const comentario = await this.comentariosService.findOne(id);
     if (!comentario) {
       // Lança erro 404 se o comentário não for encontrado.
-      throw new NotFoundException(`Comentário com ID ${id} não encontrado para atualização.`);
+      throw new NotFoundException(
+        `Comentário com ID ${id} não encontrado para atualização.`,
+      );
     }
     return this.comentariosService.update(id, updateComentariosDto);
   }
@@ -58,7 +65,9 @@ export class ComentariosController {
     const comentario = await this.comentariosService.findOne(id);
     if (!comentario) {
       // Lança erro 404 se o comentário não for encontrado.
-      throw new NotFoundException(`Comentário com ID ${id} não encontrado para exclusão.`);
+      throw new NotFoundException(
+        `Comentário com ID ${id} não encontrado para exclusão.`,
+      );
     }
     return this.comentariosService.remove(id);
   }
